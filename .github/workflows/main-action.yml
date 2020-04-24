@@ -1,0 +1,16 @@
+name: Main Action
+
+on: push
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger Github action in an other repo
+      env:
+        USERNAME: lightyears1998
+        REPO: test-github-actions-event-target
+        EVENT_TYPE: fire-missile
+        PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        curl -u "$USERNAME":"$PERSONAL_ACCESS_TOKEN" -H "Content-Type:application/json" -X POST -d '{"event_type": "$EVENT_TYPE"}' https://api.github.com/repos/"$USERNAME"/"$REPO"/dispatches
